@@ -3,20 +3,30 @@ export interface Task {
 
 	title: string;
 	description: string;
-	status: TaskStatus;
+	status: `${TaskStatus}`;
 
+	/**
+	 * expected "deadline". allowed to update but not allowed to be set to a date before createdAt
+	 */
+	expectedAt: string | undefined;
+	/**
+	 * update only when move to Done
+	 */
+	finishedAt: string | undefined;
+	/**
+	 * task creation timestamp, do not update, ever.
+	 */
 	createdAt: string;
+	/**
+	 * update with every change
+	 */
 	updatedAt: string;
 }
 
 export enum TaskStatus {
-	Backlog = 'Backlog',
-	Todo = 'Todo',
-	InProgress = 'InProgress',
-	Done = 'Done',
-}
-
-export interface TaskCreateRequest {
-	title: Task['title'];
-	description: Task['description'];
+	Backlog = 'backlog',
+	Todo = 'todo',
+	InProgress = 'in-progress',
+	Done = 'done',
+	Cancelled = 'cancelled',
 }
